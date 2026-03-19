@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jaal Web Series</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    background: #0f0f0f;
+    color: white;
+}
+
+:root {
+    --pink: #ff2e88;
+}
+
+/* BANNER */
+header {
+    background: url('screenshots/banner.jpg') no-repeat center/cover;
+    height: 280px;
+    position: relative;
+}
+
+header h1 {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(0,0,0,0.6);
+    padding: 10px 20px;
+    border-left: 5px solid var(--pink);
+}
+
+/* CONTAINER */
+.container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 20px;
+}
+
+/* DETAILS */
+.details {
+    background: #1a1a1a;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+/* GALLERY */
+.screenshots {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+}
+
+.screenshots img {
+    width: 100%;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.screenshots img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px var(--pink);
+}
+
+/* MODAL */
+.modal {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.9);
+}
+
+.modal img {
+    max-width: 90%;
+    margin: 5% auto;
+    display: block;
+}
+
+/* BUTTON */
+button {
+    background: var(--pink);
+    border: none;
+    padding: 12px 20px;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* VIDEO */
+.videoModal {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.9);
+}
+
+.videoModal iframe {
+    width: 80%;
+    height: 60%;
+    margin: 5% auto;
+    display: block;
+}
+
+.close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 30px;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Jaal – ULLU Web Series 💗</h1>
+</header>
+
+<div class="container">
+
+<div class="details">
+<p><b>Title:</b> Jaal – ULLU Web Series</p>
+<p><b>Genre:</b> 18+ | Adult</p>
+<p><b>Release Date:</b> 21 June 2022</p>
+<p><b>Language:</b> Hindi</p>
+<p><b>Quality:</b> 1080p WEB-DL</p>
+<p><b>Watermark:</b> No</p>
+<p><b>Audio:</b> AAC 2.0CH</p>
+<p><b>Format:</b> MKV</p>
+<p><b>Size:</b> Various</p>
+
+<h3>Storyline</h3>
+<p>
+Nidhi is married to a dysfunctional family where everyone is driven by money.
+To survive, she must become someone she never imagined.
+</p>
+
+<button onclick="openVideo()">▶ Watch Preview</button>
+</div>
+
+<h2>Screenshots</h2>
+<div class="screenshots" id="gallery"></div>
+
+<h2>Download</h2>
+<button onclick="startDownload()">Download Now</button>
+<div id="count"></div>
+
+</div>
+
+<!-- IMAGE MODAL -->
+<div id="imgModal" class="modal" onclick="this.style.display='none'">
+<img id="modalImg">
+</div>
+
+<!-- VIDEO -->
+<div id="videoModal" class="videoModal">
+<span class="close" onclick="closeVideo()">&times;</span>
+<iframe id="videoFrame" allowfullscreen></iframe>
+</div>
+
+<script>
+// ✅ SIMPLE & FAST IMAGE LOADER
+const gallery = document.getElementById("gallery");
+
+const totalImages = 30; // change to your total images
+
+for (let i = 1; i <= totalImages; i++) {
+    let img = document.createElement("img");
+
+    img.src = `screenshots/${i}.jpg`;
+    img.loading = "lazy";
+
+    img.onerror = function () {
+        this.remove(); // remove if not exist
+    };
+
+    img.onclick = function () {
+        document.getElementById("imgModal").style.display = "block";
+        document.getElementById("modalImg").src = this.src;
+    };
+
+    gallery.appendChild(img);
+}
+
+// 🎬 YOUTUBE
+function openVideo() {
+    document.getElementById("videoModal").style.display = "block";
+    document.getElementById("videoFrame").src =
+    "https://www.youtube.com/embed/oKPVqY_OQog?autoplay=1";
+}
+
+function closeVideo() {
+    document.getElementById("videoModal").style.display = "none";
+    document.getElementById("videoFrame").src = "";
+}
+
+// ⬇ DOWNLOAD
+function startDownload() {
+    let t = 10;
+    let c = document.getElementById("count");
+
+    let timer = setInterval(() => {
+        t--;
+        c.innerHTML = "Redirecting in " + t + " sec";
+
+        if (t <= 0) {
+            clearInterval(timer);
+            window.location.href =
+            "https://drive.google.com/drive/folders/14bmPMl6HwcEQy4qsB_dCeO8hQDQP-QFx";
+        }
+    }, 1000);
+}
+</script>
+
+</body>
+</html>
