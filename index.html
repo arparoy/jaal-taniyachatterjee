@@ -3,18 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Jaal Web Series</title>
+
+<!-- FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
 body {
     margin: 0;
-    font-family: Arial;
-    background: #0f0f0f;
-    color: white;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #0f0f0f, #1a0010);
+    color: #fff;
 }
 
 :root {
     --pink: #ff2e88;
+    --pink-light: #ff5ca8;
+    --glass: rgba(255,255,255,0.05);
 }
 
 /* BANNER */
@@ -24,10 +30,19 @@ header {
     position: relative;
 }
 
+header::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, #0f0f0f, transparent);
+}
+
 header h1 {
     position: absolute;
     bottom: 20px;
     left: 20px;
+    z-index: 2;
     background: rgba(0,0,0,0.6);
     padding: 10px 20px;
     border-left: 5px solid var(--pink);
@@ -40,71 +55,90 @@ header h1 {
     padding: 20px;
 }
 
-/* DETAILS */
+/* GLASS CARD */
 .details {
-    background: #1a1a1a;
-    padding: 15px;
-    border-radius: 10px;
+    background: var(--glass);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 0 20px rgba(255,46,136,0.2);
+}
+
+h2, h3 {
+    color: var(--pink-light);
 }
 
 /* GALLERY */
 .screenshots {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 10px;
+    gap: 12px;
 }
 
 .screenshots img {
     width: 100%;
-    border-radius: 8px;
+    border-radius: 12px;
     cursor: pointer;
     transition: 0.3s;
 }
 
 .screenshots img:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 10px var(--pink);
+    transform: scale(1.06);
+    box-shadow: 0 0 20px var(--pink);
 }
 
-/* MODAL */
-.modal {
+/* BUTTONS */
+button {
+    border: none;
+    padding: 12px 22px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 8px 5px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.watch-btn {
+    background: linear-gradient(45deg, var(--pink), var(--pink-light));
+    color: white;
+    box-shadow: 0 0 15px rgba(255,46,136,0.5);
+}
+
+.watch-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(255,46,136,0.9);
+}
+
+#btn1 { background: var(--pink); }
+#btn2 { background: #444; }
+
+#btn1:hover, #btn2:hover {
+    transform: scale(1.05);
+}
+
+/* MODALS */
+.modal, .videoModal {
     display: none;
     position: fixed;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.9);
+    background: rgba(0,0,0,0.95);
+    z-index: 999;
 }
 
 .modal img {
     max-width: 90%;
     margin: 5% auto;
     display: block;
-}
-
-/* BUTTON */
-button {
-    background: var(--pink);
-    border: none;
-    padding: 12px 20px;
-    color: white;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-/* VIDEO */
-.videoModal {
-    display: none;
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.9);
+    border-radius: 10px;
 }
 
 .videoModal iframe {
-    width: 80%;
+    width: 85%;
     height: 60%;
     margin: 5% auto;
     display: block;
+    border-radius: 10px;
 }
 
 .close {
@@ -120,14 +154,15 @@ button {
 <body>
 
 <header>
-    <h1>Jaal – ULLU Web Series 💗</h1>
+    <h1>Jaal – Web Series S1</h1>
 </header>
 
 <div class="container">
 
 <div class="details">
+
 <p><b>Title:</b> Jaal – ULLU Web Series</p>
-<p><b>Genre:</b> 18+ | Adult</p>
+<p><b>Genre:</b> 🔞 </p>
 <p><b>Release Date:</b> 21 June 2022</p>
 <p><b>Language:</b> Hindi</p>
 <p><b>Quality:</b> 1080p WEB-DL</p>
@@ -142,14 +177,28 @@ Nidhi is married to a dysfunctional family where everyone is driven by money.
 To survive, she must become someone she never imagined.
 </p>
 
-<button onclick="openVideo()">▶ Watch Preview</button>
+<h3>Cast</h3>
+<ul>
+<li>Ramesh Goyal (Dheeraj)</li>
+<li>Ashraf Saifi (Vijay)</li>
+<li>Abhi Rizvi (Anmol)</li>
+<li>Donna Munshi (Nidhi)</li>
+<li>Tanya Chatterjee (Surekha)</li>
+<li>Harthik Yadav (Chinga)</li>
+<li>Muskaan Agrawal (Rani)</li>
+</ul>
+
+<button class="watch-btn" onclick="openVideo()">▶ Watch Preview</button>
+
 </div>
 
 <h2>Screenshots</h2>
 <div class="screenshots" id="gallery"></div>
 
 <h2>Download</h2>
-<button onclick="startDownload()">Download Now</button>
+<button onclick="startDownload()" id="btn1">Primary Download</button>
+<button onclick="startBackupDownload()" id="btn2">Backup Download</button>
+
 <div id="count"></div>
 
 </div>
@@ -159,27 +208,23 @@ To survive, she must become someone she never imagined.
 <img id="modalImg">
 </div>
 
-<!-- VIDEO -->
+<!-- VIDEO MODAL -->
 <div id="videoModal" class="videoModal">
 <span class="close" onclick="closeVideo()">&times;</span>
 <iframe id="videoFrame" allowfullscreen></iframe>
 </div>
 
 <script>
-// ✅ SIMPLE & FAST IMAGE LOADER
+// LOAD IMAGES
 const gallery = document.getElementById("gallery");
-
-const totalImages = 30; // change to your total images
+const totalImages = 32;
 
 for (let i = 1; i <= totalImages; i++) {
     let img = document.createElement("img");
-
     img.src = `screenshots/${i}.jpg`;
     img.loading = "lazy";
 
-    img.onerror = function () {
-        this.remove(); // remove if not exist
-    };
+    img.onerror = function () { this.remove(); };
 
     img.onclick = function () {
         document.getElementById("imgModal").style.display = "block";
@@ -189,7 +234,7 @@ for (let i = 1; i <= totalImages; i++) {
     gallery.appendChild(img);
 }
 
-// 🎬 YOUTUBE
+// YOUTUBE
 function openVideo() {
     document.getElementById("videoModal").style.display = "block";
     document.getElementById("videoFrame").src =
@@ -201,14 +246,14 @@ function closeVideo() {
     document.getElementById("videoFrame").src = "";
 }
 
-// ⬇ DOWNLOAD
+// DOWNLOAD
 function startDownload() {
     let t = 10;
     let c = document.getElementById("count");
 
     let timer = setInterval(() => {
         t--;
-        c.innerHTML = "Redirecting in " + t + " sec";
+        c.innerHTML = "Primary link opening in " + t + " sec";
 
         if (t <= 0) {
             clearInterval(timer);
@@ -217,7 +262,23 @@ function startDownload() {
         }
     }, 1000);
 }
+
+function startBackupDownload() {
+    let t = 10;
+    let c = document.getElementById("count");
+
+    let timer = setInterval(() => {
+        t--;
+        c.innerHTML = "Backup link opening in " + t + " sec";
+
+        if (t <= 0) {
+            clearInterval(timer);
+            window.location.href =
+            "https://drive.google.com/drive/folders/1ehHU70QGBuD1LRK1Bm_18o71cHoLfzWr";
+        }
+    }, 1000);
+}
 </script>
 
 </body>
-</html>
+    </html>
